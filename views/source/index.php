@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'url:url',
-            'category',
+            ['label' => 'Category', 'value' => 'category.full_text'],
             ['label' => 'Status', 'format' => 'raw', 'value' => function ($data) {
                 return StatusView::widget(['data' => $data]);
             }],

@@ -9,8 +9,10 @@ use Yii;
  *
  * @property int $id
  * @property string $url
- * @property int $category
+ * @property int $category_id
  * @property int $status
+ *
+ * @property Category $category
  */
 class ProductSource extends \yii\db\ActiveRecord
 {
@@ -28,8 +30,9 @@ class ProductSource extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['category', 'status'], 'integer'],
+            [['category_id', 'status'], 'integer'],
             [['url'], 'string', 'max' => 256],
+            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
         ];
     }
 
@@ -41,8 +44,16 @@ class ProductSource extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'url' => 'Url',
-            'category' => 'Category',
+            'category_id' => 'Category ID',
             'status' => 'Status',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategory()
+    {
+        return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
 }

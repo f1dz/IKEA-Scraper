@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Category;
 use app\models\CategorySearch;
+use yii\db\Query;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -123,5 +124,24 @@ class CategoryController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionList($q = null, $id = null){
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $out = ['results' => ['id' => '', 'text' => '']];
+
+        if (!is_null($q)) {
+            $query = new Query;
+            $query->select('id, full_text AS text')
+                ->from('category')
+                ->where(['like', 'full_text', $q]);
+            $command = $query->createCommand();
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        }
+        elseif ($id > 0) {
+            $out['results'] = ['id' => $id, 'text' => Category::findOne($id)->full_text];
+        }
+        return $out;
     }
 }

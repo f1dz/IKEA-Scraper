@@ -19,7 +19,7 @@ class m190914_120314_create_product_source_table extends Migration
             'status' => $this->integer()
         ]);
 
-        $this->addForeignKey('fk-product_source-id','%product_source','category_id', 'category','id');
+        $this->addForeignKey('fk-product_source-id','product_source','category_id', 'category','id');
     }
 
     /**

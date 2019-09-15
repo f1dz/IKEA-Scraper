@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'url') ?>
 
-    <?= $form->field($model, 'category') ?>
+    <?= $form->field($model, 'category_id') ?>
 
     <?= $form->field($model, 'status') ?>
 
