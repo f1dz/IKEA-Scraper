@@ -25,7 +25,7 @@ class Utils
     }
 
     public static function strNormalize($str){
-        $replace = preg_replace('/([\-]|art-[\d]+)/',' ', $str);
+        $replace = preg_replace('/([\-\+]|art-[\d]+)/',' ', $str);
         $trim = trim($replace);
         return ucwords($trim);
     }

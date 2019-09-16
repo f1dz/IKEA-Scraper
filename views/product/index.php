@@ -29,14 +29,34 @@ $this->params['breadcrumbs'][] = $this->title;
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
 
-                'id',
-                'name',
+                [
+                    'header' => 'Name',
+                    'format' => 'raw',
+                    'value' => function ($data) {
+                        return Html::a($data->name, ['product/view', 'id' => $data->id]);
+                    }
+                ],
                 'sub_name',
-                'price',
-                'price_profit',
+                [
+                    'attribute' => 'price',
+                    'format' => 'decimal',
+                    'contentOptions' => ['class' => 'text-right'],
+                    'headerOptions' => ['class' => 'text-right'],
+                ],
+                [
+                    'attribute' => 'price_profit',
+                    'format' => 'decimal',
+                    'contentOptions' => ['class' => 'text-right'],
+                    'headerOptions' => ['class' => 'text-right']
+                ],
                 //'category_id',
                 //'article_no',
-                //'stock',
+                [
+                    'attribute' => 'stock',
+                    'format' => 'decimal',
+                    'contentOptions' => ['class' => 'text-right'],
+                    'headerOptions' => ['class' => 'text-right']
+                ],
                 //'main_feature:ntext',
                 //'dimension:ntext',
                 //'package:ntext',
