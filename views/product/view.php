@@ -33,11 +33,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 'id',
                 'name',
                 'sub_name',
-                'price',
-                'price_profit',
-                'category_id',
+                'source.url:url',
+                'price:decimal',
+                'price_profit:decimal',
+                ['label' => 'Category', 'format' => 'raw', 'value' => function($data){
+                    return "<strong>$data->category_id</strong> - " . $data->category->full_text;
+                }],
                 'article_no',
                 'stock',
+                'packagePlus.gross_weight',
                 'main_feature:ntext',
                 'dimension:ntext',
                 'package:ntext',
