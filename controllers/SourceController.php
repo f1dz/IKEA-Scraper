@@ -67,6 +67,14 @@ class SourceController extends Controller
         $model = new ProductSource();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            $exist = ProductSource::findOne(['url' => $model->url]);
+
+            if($exist) {
+                Yii::$app->session->setFlash('danger', "Product is exist on database");
+                return $this->goBack('/source/create');
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

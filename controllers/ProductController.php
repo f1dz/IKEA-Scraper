@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\ProductSource;
 use Yii;
 use app\models\Product;
 use app\models\ProductSearch;

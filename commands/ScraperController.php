@@ -30,6 +30,7 @@ class ScraperController extends Controller
             $product = new Product();
 
             $product->attributes = $ikea->scrap()->attributes;
+            $product->source_id = $source->id;
             if ($product->save()) {
                 $source->status = 1;
                 $source->save();
