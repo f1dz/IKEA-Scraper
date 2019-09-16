@@ -27,6 +27,19 @@ $this->params['breadcrumbs'][] = $this->title;
             ]) ?>
         </p>
 
+        <div class="row">
+            <?php
+            $images = explode(',', $model->images);
+            foreach ($images as $image) {
+                ?>
+                <div class="col-md-3">
+                    <img src="/downloads/<?=$model->name?>/<?=\app\components\helpers\Utils::urlToTitle($image)?>" class="thumbnail" width="250px">
+                </div>
+                <?php
+            }
+            ?>
+        </div>
+
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
@@ -36,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'source.url:url',
                 'price:decimal',
                 'price_profit:decimal',
-                ['label' => 'Category', 'format' => 'raw', 'value' => function($data){
+                ['label' => 'Category', 'format' => 'raw', 'value' => function ($data) {
                     return "<strong>$data->category_id</strong> - " . $data->category->full_text;
                 }],
                 'article_no',
