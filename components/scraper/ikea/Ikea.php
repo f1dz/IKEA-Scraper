@@ -166,7 +166,7 @@ class Ikea extends Component
 
     public function downloadImages($debug = false)
     {
-        $path = Yii::$app->basePath. '/downloads/' . $this->product->name;
+        $path = Yii::$app->basePath. '/web/downloads/' . $this->product->name;
 
         if(!is_dir($path)) mkdir($path);
 
