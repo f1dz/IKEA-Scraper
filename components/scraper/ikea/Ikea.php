@@ -147,9 +147,15 @@ class Ikea extends Component
         }
 
         try {
-            $crawler->filter('img.img-thumbnail')->each(function ($node) {
-                $this->product->images .= Utils::imgUrl($node->attr('src')) . ',';
-            });
+            if(count($crawler->filter('img.img-thumbnail')) > 1) {
+                $crawler->filter('img.img-thumbnail')->each(function ($node) {
+                    $this->product->images .= Utils::imgUrl($node->attr('src')) . ',';
+                });
+            } else {
+                $crawler->filter('a.slideImg')->each(function ($node) {
+                    $this->product->images = $node->attr('href');
+                });
+            }
         } catch (Exception $e) {
             echo $e->getMessage();
         }

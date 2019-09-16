@@ -14,6 +14,8 @@ namespace app\commands;
 use app\components\scraper\ikea\Ikea;
 use app\models\Product;
 use app\models\ProductSource;
+use function print_r;
+use function var_dump;
 use yii\console\Controller;
 
 class ScraperController extends Controller
