@@ -14,18 +14,13 @@ namespace app\components\scraper\ikea;
 use app\components\helpers\Utils;
 use app\models\Product;
 use app\models\ProductSource;
-use function copy;
 use Exception;
 use function explode;
 use function file_put_contents;
 use Goutte\Client;
-use function implode;
 use function is_dir;
 use function mkdir;
-use function print_r;
-use SebastianBergmann\CodeCoverage\Util;
 use function trim;
-use function var_dump;
 use Yii;
 use yii\base\Component;
 
