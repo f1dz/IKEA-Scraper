@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'header' => 'Name',
                     'format' => 'raw',
+                    'filter' => \yii\bootstrap\Html::activeInput('text',$searchModel,'name', ['class' => 'form-control']),
                     'value' => function ($data) {
                         return Html::a($data->name, ['product/view', 'id' => $data->id]);
                     }
