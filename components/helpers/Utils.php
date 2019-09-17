@@ -10,9 +10,12 @@
 
 namespace app\components\helpers;
 
+use app\models\Package;
 use function count;
+use function preg_match_all;
 use function preg_replace;
 use function round;
+use function str_replace;
 use function trim;
 use function ucwords;
 
@@ -25,7 +28,7 @@ class Utils
     }
 
     public static function strNormalize($str){
-        $replace = preg_replace('/([\-]|art-[\d]+)/',' ', $str);
+        $replace = preg_replace('/([\-\+]|art-[\d]+)/',' ', $str);
         $trim = trim($replace);
         return ucwords($trim);
     }
@@ -43,5 +46,76 @@ class Utils
 
     public static function imgUrl($url){
         return preg_replace('/_S1\./', '_S5.',$url);
+    }
+
+    /**
+     * @param string $str
+     * @return int
+     */
+    public static function strToPackage($str){
+        preg_match_all('/(Paket: )([\d]+)/', $str, $matches);
+        return (float) str_replace(',', '.', $matches[2][0]);
+    }
+
+    /**
+     * @param string $str
+     * @return float
+     */
+    public static function strToGrossWeight($str){
+        preg_match_all('/(Berat Kotor: )([\d,]+)/', $str, $matches);
+        return (float) str_replace(',', '.', $matches[2][0]);
+    }
+
+    /**
+     * @param string $str
+     * @return float
+     */
+    public static function strToNetWeight($str){
+        preg_match_all('/(Berat Bersih: )([\d,]+)/', $str, $matches);
+        return (float) str_replace(',', '.', $matches[2][0]);
+    }
+
+    /**
+     * @param string $str
+     * @return int
+     */
+    public static function strToLong($str){
+        preg_match_all('/(Panjang: )([\d]+)/', $str, $matches);
+        return (float) @str_replace(',', '.', $matches[2][0]);
+    }
+
+    /**
+     * @param string $str
+     * @return int
+     */
+    public static function strToWidth($str){
+        preg_match_all('/(Lebar: )([\d]+)/', $str, $matches);
+        return (float) @str_replace(',', '.', $matches[2][0]);
+    }
+
+    /**
+     * @param string $str
+     * @return int
+     */
+    public static function strToHeight($str){
+        preg_match_all('/(Tinggi: )([\d]+)/', $str, $matches);
+        return (float) @str_replace(',', '.', $matches[2][0]);
+    }
+
+    /**
+     * @param string $str
+     * @return float
+     */
+    public static function strToVolume($str){
+        preg_match_all('/(Volume per paket: )([\d,]+)/', $str, $matches);
+        return (float) str_replace(',', '.', $matches[2][0]);
+    }
+
+    /**
+     * @param Package $model
+     * @return float|int
+     */
+    public static function volumeWeight(Package $model){
+        return $model->long * $model->width * $model->height / 6000;
     }
 }

@@ -14,6 +14,8 @@ namespace app\commands;
 use app\components\scraper\ikea\Ikea;
 use app\models\Product;
 use app\models\ProductSource;
+use function print_r;
+use function var_dump;
 use yii\console\Controller;
 
 class ScraperController extends Controller
@@ -30,6 +32,7 @@ class ScraperController extends Controller
             $product = new Product();
 
             $product->attributes = $ikea->scrap()->attributes;
+            $product->source_id = $source->id;
             if ($product->save()) {
                 $source->status = 1;
                 $source->save();
