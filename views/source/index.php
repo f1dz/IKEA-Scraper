@@ -33,9 +33,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'url:url',
             ['label' => 'Category', 'value' => 'category.full_text'],
-            ['label' => 'Status', 'format' => 'raw', 'value' => function ($data) {
-                return StatusView::widget(['data' => $data]);
-            }],
+            [
+                'label' => 'Status',
+                'format' => 'raw',
+                'filter' => \yii\bootstrap\Html::activeDropDownList($searchModel, 'status', [0 => 'Waiting', 1 => 'Processed'], ['class' => 'form-control', 'prompt' => 'All']),
+                'value' => function ($data) {
+                    return StatusView::widget(['data' => $data]);
+                }],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
