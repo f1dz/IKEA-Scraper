@@ -101,14 +101,14 @@ class Ikea extends Component
 
         try {
             $crawler->filter('#pills-features > div')->each(function ($node) {
-                $this->product->main_feature = trim($node->text());
+                $this->product->main_feature = trim(Utils::trim($node->text()));
             });
         } catch (Exception $e) {
         }
 
         try {
             $crawler->filter('#pills-measurements > div > table')->each(function ($node) {
-                $this->product->dimension = trim($node->text());
+                $this->product->dimension = trim(Utils::trimNewLine($node->text()));
             });
         } catch (Exception $e) {
         }
@@ -168,7 +168,7 @@ class Ikea extends Component
         $images = explode(',', $this->product->images);
         foreach ($images as $img) {
             if($debug)
-                echo "Downloading... $img...";
+                echo "Downloading... $img";
 
             file_put_contents($path .'/'. Utils::urlToTitle($img), file_get_contents($img));
 
