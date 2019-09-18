@@ -1,14 +1,14 @@
 <?php
 
+use app\models\Product;
 use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\helpers\VarDumper;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+/* @var $data Product */
 //VarDumper::dump($dataProvider->models[0]->packagePlus, 10, true);
 //VarDumper::dump($dataProvider->models[0]->packageOrigin, 10, true);exit;
 
@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'header' => 'Name',
                     'format' => 'raw',
-                    'filter' => \yii\bootstrap\Html::activeInput('text',$searchModel,'name', ['class' => 'form-control']),
+                    'filter' => \yii\bootstrap\Html::activeInput('text', $searchModel, 'name', ['class' => 'form-control']),
                     'value' => function ($data) {
                         return Html::a($data->name, ['product/view', 'id' => $data->id]);
                     }
@@ -62,35 +62,30 @@ $this->params['breadcrumbs'][] = $this->title;
                     'contentOptions' => ['class' => 'text-right'],
                     'headerOptions' => ['class' => 'text-right']
                 ],
-
+                'dimension',
                 [
-                    'header' => 'Weight (kg)',
+                    'header' => 'Weight (gr)',
                     'format' => 'decimal',
-                    'value' => function($data){
-                        return $data->packagePlus->gross_weight;
+                    'value' => function ($data) {
+                        return max($data->packagePlus->gross_weight, $data->packagePlus->volume_weight) * 1000;
                     },
                     'contentOptions' => ['class' => 'text-right'],
                     'headerOptions' => ['class' => 'text-right']
                 ],
-
-                [
-                    'header' => 'Vol Wgt (kg)',
-                    'format' => 'decimal',
-                    'value' => function($data){
-                        return $data->packagePlus->volume_weight;
-                    },
-                    'contentOptions' => ['class' => 'text-right'],
-                    'headerOptions' => ['class' => 'text-right']
-                ],
-
                 [
                     'header' => 'Profit',
                     'format' => 'decimal',
-                    'value' => function($data){
+                    'value' => function ($data) {
                         return $data->price_profit - $data->price;
                     },
                     'contentOptions' => ['class' => 'text-right'],
                     'headerOptions' => ['class' => 'text-right']
+                ],
+                [
+                    'header' => 'LPT',
+                    'value' => function ($data) {
+                        return @$data->packagePlus->width . "x" . @$data->packagePlus->long . "x" . @$data->packagePlus->height;
+                    }
                 ],
 
                 //'main_feature:ntext',

@@ -118,4 +118,20 @@ class Utils
     public static function volumeWeight(Package $model){
         return $model->long * $model->width * $model->height / 6000;
     }
+
+    /**
+     * @param $str
+     * @return null|string|string[]
+     */
+    public static function trimNewLine($str){
+        return preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $str);
+    }
+
+    /**
+     * @param $str
+     * @return string
+     */
+    public static function trim($str){
+        return implode("\n", array_map('trim', explode("\n", $str)));
+    }
 }

@@ -3,7 +3,6 @@
 namespace app\models;
 
 use app\components\helpers\Utils;
-use SebastianBergmann\CodeCoverage\Util;
 use Yii;
 
 /**
@@ -67,7 +66,7 @@ class Product extends \yii\db\ActiveRecord
             'name' => 'Name',
             'sub_name' => 'Sub Name',
             'price' => 'Price',
-            'price_profit' => 'Price Profit',
+            'price_profit' => 'Sale Price',
             'category_id' => 'Category ID',
             'article_no' => 'Article No',
             'stock' => 'Stock',
