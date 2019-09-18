@@ -49,8 +49,8 @@ class Spout extends Component
             $weight = (max(@$product->packagePlus->gross_weight, @$product->packagePlus->volume_weight) * 1000);
             $cells = [
                 WriterEntityFactory::createCell(@$product->category_id),
-                WriterEntityFactory::createCell(@$product->name . ' IKEA ' . @$product->sub_name),
-                WriterEntityFactory::createCell(Utils::trim(@$product->main_feature) . "\n\r" . Utils::trimNewLine(@$product->dimension)),
+                WriterEntityFactory::createCell('IKEA ' . @$product->name . ' ' . @$product->sub_name),
+                WriterEntityFactory::createCell(@$product->main_feature . "\n\r" . @$product->dimension),
                 WriterEntityFactory::createCell((float)@$product->price_profit),
                 WriterEntityFactory::createCell(5),
                 WriterEntityFactory::createCell($weight),
