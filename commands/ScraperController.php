@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: ofid
@@ -6,17 +7,23 @@
  * Time: 14.27
  *
  * @author Khofidin <offiedz@gmail.com>
+ *
  */
 
 namespace app\commands;
 
 
+use app\components\helpers\Utils;
 use app\components\scraper\ikea\Ikea;
 use app\models\Product;
 use app\models\ProductSource;
-use function print_r;
-use function var_dump;
 use yii\console\Controller;
+
+/**
+ * Class ScraperController
+ * @package app\commands
+ *
+ */
 
 class ScraperController extends Controller
 {
@@ -24,12 +31,17 @@ class ScraperController extends Controller
     {
         $sources = ProductSource::find()->where(['status' => 0])->all();
 
+        /**
+         * @var ProductSource $source
+         */
         foreach ($sources as $source) {
 
             $ikea = new Ikea();
             $ikea->source = $source;
 
             $product = new Product();
+
+            echo "Processing: " . Utils::urlToTitle($source->url) . "\n";
 
             $product->attributes = $ikea->scrap()->attributes;
             $product->source_id = $source->id;
