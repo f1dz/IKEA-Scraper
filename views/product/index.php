@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'contentOptions' => ['class' => 'text-right'],
                     'headerOptions' => ['class' => 'text-right']
                 ],
-                'dimension',
+                'dimension:ntext',
                 [
                     'header' => 'Weight (gr)',
                     'format' => 'decimal',
