@@ -41,7 +41,7 @@ class ScraperController extends Controller
 
             $product = new Product();
 
-            echo "Processing: " . Utils::urlToTitle($source->url) . "\n";
+            echo "\e[1;32mProcessing:\e[0m " . Utils::urlToTitle($source->url) . "\n";
 
             $product->attributes = $ikea->scrap()->attributes;
             $product->source_id = $source->id;
