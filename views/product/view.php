@@ -59,6 +59,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'dimension:ntext',
                 'package:ntext',
                 'material:ntext',
+                'care_instructions:ntext',
+                'additional_info:ntext',
                 'location:ntext',
             ],
         ]) ?>
