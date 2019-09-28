@@ -24,6 +24,8 @@ use Yii;
  * @property string $location
  * @property string $breadcrumb
  * @property string $images
+ * @property string $care_instructions
+ * @property string $additional_info
  *
  * @property Category $category
  * @property Package $packageOrigin
@@ -48,7 +50,7 @@ class Product extends \yii\db\ActiveRecord
         return [
             [['price', 'price_profit'], 'number'],
             [['category_id', 'stock', 'source_id'], 'integer'],
-            [['main_feature', 'dimension', 'package', 'material', 'location','images'], 'string'],
+            [['main_feature', 'dimension', 'package', 'material', 'location','images', 'care_instructions', 'additional_info'], 'string'],
             [['name', 'sub_name', 'article_no', 'breadcrumb'], 'string', 'max' => 128],
             [['source_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductSource::class, 'targetAttribute' => ['source_id' => 'id']],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
@@ -77,6 +79,8 @@ class Product extends \yii\db\ActiveRecord
             'location' => 'Location',
             'breadcrumb' => 'Breadcrumb',
             'images' => 'Images',
+            'care_instructions' => 'Care Instructions',
+            'additional_info' => 'Additional Info',
         ];
     }
 
