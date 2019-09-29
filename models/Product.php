@@ -33,6 +33,7 @@ use yii\db\Expression;
  * @property Package $packageOrigin
  * @property Package $packagePlus
  * @property ProductSource $source
+ * @property array $imagesArray
  */
 class Product extends \yii\db\ActiveRecord
 {
@@ -144,5 +145,12 @@ class Product extends \yii\db\ActiveRecord
         $model->volume = Utils::strToVolume($this->package) + 0.1;
         $model->volume_weight = Utils::volumeWeight($model);
         return $model;
+    }
+
+    /**
+     * @return array
+     */
+    public function getImagesArray(){
+        return $images = explode(',', $this->images);
     }
 }
