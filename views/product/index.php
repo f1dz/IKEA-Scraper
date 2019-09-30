@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format' => 'raw',
                     'value' => function ($data) {
                         $img = Utils::urlToTitle($data->imagesArray[0]);
-                        $val = "<div class='thumbnail text-center'>";
+                        $val = "<div class='thumbnail photo text-center'>";
                         $val .= "<img src='/downloads/{$data->name}/{$img}' class='img-responsive'/>";
                         $val .= "<div class='caption'><span class='label label-success'>$data->name #$data->id</span></div>";
                         $val .= "</div>";

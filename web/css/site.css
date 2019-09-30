@@ -116,7 +116,7 @@ a.desc:after {
 
 .thumbnail {
     position: relative;
-    width: 150px;
+    width: 250px;
 }
 
 .caption {
@@ -124,4 +124,9 @@ a.desc:after {
     top: 73%;
     left: 0;
     width: 100%;
+}
+
+.photo {
+    position: relative;
+    width: 150px;
 }
