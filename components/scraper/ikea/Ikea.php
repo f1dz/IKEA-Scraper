@@ -184,10 +184,12 @@ class Ikea extends Component
             if($debug)
                 echo "Downloading... $img";
 
-            file_put_contents($path .'/'. Utils::urlToTitle($img), file_get_contents($img));
+            $fileSize = file_put_contents($path .'/'. Utils::urlToTitle($img), file_get_contents($img));
+
+            $size = Utils::formatBytes($fileSize);
 
             if($debug)
-                echo " downloaded!\n" ;
+                echo "\e[1;32m downloaded!\e[0m File size: \e[1;32m$size\e[0m\n" ;
         }
 
     }
