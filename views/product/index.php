@@ -1,5 +1,6 @@
 <?php
 
+use app\components\helpers\Utils;
 use app\models\Product;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -32,27 +33,42 @@ $this->params['breadcrumbs'][] = $this->title;
             'filterModel' => $searchModel,
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
-
                 [
-                    'header' => 'Name',
+                    'attribute' => 'name',
                     'format' => 'raw',
-                    'filter' => \yii\bootstrap\Html::activeInput('text', $searchModel, 'name', ['class' => 'form-control']),
                     'value' => function ($data) {
-                        return Html::a($data->name, ['product/view', 'id' => $data->id]);
+                        $img = Utils::urlToTitle($data->imagesArray[0]);
+                        $val = "<div class='thumbnail photo text-center'>";
+                        $val .= "<img src='/downloads/{$data->name}/{$img}' class='img-responsive'/>";
+                        $val .= "<div class='caption'><span class='label label-success'>$data->name #$data->id</span></div>";
+                        $val .= "</div>";
+                        $a = Html::a($val, ['product/view', 'id' => $data->id]);
+                        return $a;
                     }
                 ],
-                'sub_name',
                 [
-                    'attribute' => 'price',
-                    'format' => 'decimal',
-                    'contentOptions' => ['class' => 'text-right'],
-                    'headerOptions' => ['class' => 'text-right'],
+                    'attribute' => 'sub_name',
+                    'format' => 'raw',
+                    'value' => function($data){
+                        $val = "<div>$data->sub_name</div><br/>";
+                        $val .= "<span class='label label-info'>Material</span><br/>";
+                        $val .= $data->material;
+
+                        return $val;
+                    }
                 ],
                 [
-                    'attribute' => 'price_profit',
-                    'format' => 'decimal',
+                    'attribute' => 'price',
+                    'format' => 'ntext',
                     'contentOptions' => ['class' => 'text-right'],
-                    'headerOptions' => ['class' => 'text-right']
+                    'headerOptions' => ['class' => 'text-right'],
+                    'value' => function ($data) {
+                        $val = Yii::$app->formatter->asDecimal($data->price_profit) . "\n" .
+                            Yii::$app->formatter->asDecimal($data->price) . "\n" .
+                            Yii::$app->formatter->asDecimal($data->price_profit - $data->price);
+
+                        return $val;
+                    }
                 ],
                 //'category_id',
                 //'article_no',
@@ -68,15 +84,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format' => 'decimal',
                     'value' => function ($data) {
                         return max($data->packagePlus->gross_weight, $data->packagePlus->volume_weight) * 1000;
-                    },
-                    'contentOptions' => ['class' => 'text-right'],
-                    'headerOptions' => ['class' => 'text-right']
-                ],
-                [
-                    'header' => 'Profit',
-                    'format' => 'decimal',
-                    'value' => function ($data) {
-                        return $data->price_profit - $data->price;
                     },
                     'contentOptions' => ['class' => 'text-right'],
                     'headerOptions' => ['class' => 'text-right']

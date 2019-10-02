@@ -113,3 +113,20 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.thumbnail {
+    position: relative;
+    width: 250px;
+}
+
+.caption {
+    position: absolute;
+    top: 73%;
+    left: 0;
+    width: 100%;
+}
+
+.photo {
+    position: relative;
+    width: 150px;
+}

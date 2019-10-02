@@ -4,6 +4,8 @@ namespace app\models;
 
 use app\components\helpers\Utils;
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "product".
@@ -31,6 +33,7 @@ use Yii;
  * @property Package $packageOrigin
  * @property Package $packagePlus
  * @property ProductSource $source
+ * @property array $imagesArray
  */
 class Product extends \yii\db\ActiveRecord
 {
@@ -50,7 +53,7 @@ class Product extends \yii\db\ActiveRecord
         return [
             [['price', 'price_profit'], 'number'],
             [['category_id', 'stock', 'source_id'], 'integer'],
-            [['main_feature', 'dimension', 'package', 'material', 'location','images', 'care_instructions', 'additional_info'], 'string'],
+            [['main_feature', 'dimension', 'package', 'material', 'location', 'images', 'care_instructions', 'additional_info'], 'string'],
             [['name', 'sub_name', 'article_no', 'breadcrumb'], 'string', 'max' => 128],
             [['source_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductSource::class, 'targetAttribute' => ['source_id' => 'id']],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
@@ -84,6 +87,16 @@ class Product extends \yii\db\ActiveRecord
         ];
     }
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'value' => new Expression('NOW()'),
+            ]
+        ];
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -95,14 +108,16 @@ class Product extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSource(){
+    public function getSource()
+    {
         return $this->hasOne(ProductSource::class, ['id' => 'source_id']);
     }
 
     /**
      * @return Package
      */
-    public function getPackageOrigin(){
+    public function getPackageOrigin()
+    {
         $model = new Package();
         $model->package = Utils::strToPackage($this->package);
         $model->gross_weight = Utils::strToGrossWeight($this->package);
@@ -118,7 +133,8 @@ class Product extends \yii\db\ActiveRecord
     /**
      * @return Package
      */
-    public function getPackagePlus(){
+    public function getPackagePlus()
+    {
         $model = new Package();
         $model->package = Utils::strToPackage($this->package);
         $model->gross_weight = Utils::strToGrossWeight($this->package) + 0.15;
@@ -129,5 +145,12 @@ class Product extends \yii\db\ActiveRecord
         $model->volume = Utils::strToVolume($this->package) + 0.1;
         $model->volume_weight = Utils::volumeWeight($model);
         return $model;
+    }
+
+    /**
+     * @return array
+     */
+    public function getImagesArray(){
+        return $images = explode(',', $this->images);
     }
 }

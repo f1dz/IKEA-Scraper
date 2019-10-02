@@ -12,9 +12,10 @@ class ExportController extends \yii\web\Controller
     public function actionIndex()
     {
         $form = new ExportForm();
-        $file_name = 'shopee_upload.xlsx';
 
         if($form->load(Yii::$app->request->post())){
+
+            $file_name = "shopee_{$form->from_id}-{$form->to_id}.xlsx";
 
             if($form->file_name) $file_name = $form->file_name;
 
