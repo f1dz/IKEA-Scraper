@@ -2,10 +2,12 @@
 
 namespace app\controllers;
 
+use app\components\scraper\ikea\Ikea;
 use app\models\ProductSource;
 use Yii;
 use app\models\Product;
 use app\models\ProductSearch;
+use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -108,6 +110,27 @@ class ProductController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     */
+    public function actionSync($id){
+        $model = $this->findModel($id);
+
+        $ikea = new Ikea();
+        $ikea->source = $model->source;
+        $source_id = $model->source->id;
+        $model->attributes = $ikea->scrap()->attributes;
+        $model->source_id = $source_id;
+        if($model->save()){
+            Yii::$app->session->setFlash('success', "Data updated");
+            return $this->redirect(['view', 'id' => $id]);
+        }
+
+        return $this->goBack();
     }
 
     /**

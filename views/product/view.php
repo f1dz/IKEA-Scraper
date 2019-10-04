@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="panel-body">
         <p>
+            <?= Html::a('<span class="glyphicon glyphicon-refresh"></span> Sync', ['sync', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
             <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a('Delete', ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
