@@ -121,8 +121,8 @@ class Ikea extends Component
         }
 
         try {
-            $crawler->filter('#pills-environment > div > div')->each(function ($node) {
-                $this->product->material = trim($node->text());
+            $crawler->filter('#pills-environment > div')->each(function ($node) {
+                $this->product->material = trim(Utils::trimNewLine($node->text()));
             });
         } catch (Exception $e) {
         }
