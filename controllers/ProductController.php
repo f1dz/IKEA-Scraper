@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\components\scraper\ikea\Ikea;
 use app\models\ProductSource;
+use function is_null;
 use Yii;
 use app\models\Product;
 use app\models\ProductSearch;
@@ -123,8 +124,16 @@ class ProductController extends Controller
         $ikea = new Ikea();
         $ikea->source = $model->source;
         $source_id = $model->source->id;
-        $model->attributes = $ikea->scrap()->attributes;
+        $scrap = $ikea->scrap()->attributes;
+        if(!is_null($scrap['name'])) {
+            $model->attributes = $ikea->scrap()->attributes;
+        } else {
+            Yii::$app->session->setFlash('danger', "Cannot get new data, please check manually");
+            return $this->redirect(['view', 'id' => $id]);
+        }
+
         $model->source_id = $source_id;
+
         if($model->save()){
             Yii::$app->session->setFlash('success', "Data updated");
             return $this->redirect(['view', 'id' => $id]);
