@@ -31,7 +31,7 @@ class ExportController extends \yii\web\Controller
             $spout->products = $products->all();
             $spout->write();
 
-            Yii::$app->session->setFlash('success', "Excel saved");
+            Yii::$app->session->setFlash('success', "File $file_name saved");
         }
 
         return $this->render('index', ['model' => $form]);
