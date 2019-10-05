@@ -13,7 +13,6 @@ namespace app\components\helpers;
 
 use app\models\Product;
 use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
-use function var_dump;
 use Yii;
 use yii\base\Component;
 use yii\db\ActiveRecord;
@@ -50,9 +49,9 @@ class Spout extends Component
             $cells = [
                 WriterEntityFactory::createCell(@$product->category_id),
                 WriterEntityFactory::createCell('IKEA ' . @$product->name . ' ' . @$product->sub_name),
-                WriterEntityFactory::createCell(@$product->main_feature . "\n\r" . @$product->dimension . "\n\r" . @$product->care_instructions . "\n\r" . @$product->additional_info),
+                WriterEntityFactory::createCell(@$product->main_feature . "\n\r" . @$product->dimension ."\n\r" . @$product->material . "\n\r" . @$product->care_instructions . "\n\r" . @$product->additional_info),
                 WriterEntityFactory::createCell((float)@$product->price_profit),
-                WriterEntityFactory::createCell(5),
+                WriterEntityFactory::createCell((int) ceil(@$product->stock/9)),
                 WriterEntityFactory::createCell($weight),
                 WriterEntityFactory::createCell(''),
                 WriterEntityFactory::createCell(@$product->article_no),
