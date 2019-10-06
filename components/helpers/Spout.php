@@ -12,6 +12,7 @@ namespace app\components\helpers;
 
 
 use app\models\Product;
+use function array_merge;
 use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
 use Yii;
 use yii\base\Component;
@@ -56,6 +57,13 @@ class Spout extends Component
                 WriterEntityFactory::createCell(''),
                 WriterEntityFactory::createCell(@$product->article_no),
                 ];
+
+            $images = [];
+            foreach ($product->imagesArray as $image){
+                $images[] = WriterEntityFactory::createCell($image);
+            }
+
+            $cells = array_merge($cells, $images);
 
             $rows[] = WriterEntityFactory::createRow($cells);
         }
