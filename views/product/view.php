@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="panel-body">
         <p>
+            <?= Html::a('<span class="glyphicon glyphicon-refresh"></span> Sync', ['sync', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
             <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a('Delete', ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
@@ -29,8 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="row">
             <?php
-            $images = explode(',', $model->images);
-            foreach ($images as $image) {
+            foreach ($model->imagesArray as $image) {
                 ?>
                 <div class="col-md-3">
                     <img src="/downloads/<?=$model->name?>/<?=\app\components\helpers\Utils::urlToTitle($image)?>" class="thumbnail" width="250px">
