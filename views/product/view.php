@@ -30,8 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="row">
             <?php
-            $images = explode(',', $model->images);
-            foreach ($images as $image) {
+            foreach ($model->imagesArray as $image) {
                 ?>
                 <div class="col-md-3">
                     <img src="/downloads/<?=$model->name?>/<?=\app\components\helpers\Utils::urlToTitle($image)?>" class="thumbnail" width="250px">

@@ -3,12 +3,10 @@
 namespace app\controllers;
 
 use app\components\scraper\ikea\Ikea;
-use app\models\ProductSource;
 use function is_null;
 use Yii;
 use app\models\Product;
 use app\models\ProductSearch;
-use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -126,7 +124,7 @@ class ProductController extends Controller
         $source_id = $model->source->id;
         $scrap = $ikea->scrap()->attributes;
         if(!is_null($scrap['name'])) {
-            $model->attributes = $ikea->scrap()->attributes;
+            $model->setAttributes($scrap);
         } else {
             Yii::$app->session->setFlash('danger', "Cannot get new data, please check manually");
             return $this->redirect(['view', 'id' => $id]);
