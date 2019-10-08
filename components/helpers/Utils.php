@@ -18,6 +18,7 @@ use function round;
 use function str_replace;
 use function trim;
 use function ucwords;
+use function var_dump;
 
 class Utils
 {
@@ -36,7 +37,17 @@ class Utils
     public static function getProfitPrice($price){
         // 199.000 x 10% = 218.900
         // 39.900 x 10% = 43.890 -> 43.900
-        return round(($price * 1.1) + 500, -3)-100;
+        $profit = 1.1;
+
+        if($price <= 10000)
+            $profit = 1.3;
+        else if($price <= 15000)
+            $profit = 1.2;
+        else if($price <= 20000)
+            $profit = 1.15;
+
+        return round(($price * $profit) + 500, -3)-100;
+
     }
 
     public static function strToNumber($str){
